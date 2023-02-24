@@ -7,21 +7,21 @@ public class Labyrinth {
 
     //cellModels
     public final Cell emptyCell = new Cell(false, false, false, false); //id0
-    public final Cell wallUp = new Cell(true, false,false ,false); //id1
-    public final Cell wallDown = new Cell(false, true,false ,false); //id2
-    public final Cell wallLeft = new Cell(false, false,true ,false); //id3
-    public final Cell wallRight = new Cell(false, false,false ,true); //id4
+    public final Cell wallUp = new Cell(true, false, false, false); //id1
+    public final Cell wallDown = new Cell(false, true, false, false); //id2
+    public final Cell wallLeft = new Cell(false, false, true, false); //id3
+    public final Cell wallRight = new Cell(false, false, false, true); //id4
     public final Cell cornerUpLeft = new Cell(true, false, true, false); //id5
     public final Cell cornerUpRight = new Cell(true, false, false, true); //id6
     public final Cell cornerDownLeft = new Cell(false, true, true, false); //id7
     public final Cell cornerDownRight = new Cell(false, true, false, true); //id8
-    public final Cell hallVertical = new Cell(false, false, true ,true); //id9
-    public final Cell hallHorizontal = new Cell(true, true, false ,false); //id10
-    public final Cell deadEndUp = new Cell(true, false, true ,true); ////id11
-    public final Cell deadEndDown = new Cell(false, true, true ,true); //id12
-    public final Cell deadEndLeft = new Cell(true, true, true ,false); //id13
-    public final Cell deadEndRight = new Cell(true, true, false ,true);//id14
-    public final Cell fullCell = new Cell(true, true, true ,true); //id15
+    public final Cell hallVertical = new Cell(false, false, true, true); //id9
+    public final Cell hallHorizontal = new Cell(true, true, false, false); //id10
+    public final Cell deadEndUp = new Cell(true, false, true, true); ////id11
+    public final Cell deadEndDown = new Cell(false, true, true, true); //id12
+    public final Cell deadEndLeft = new Cell(true, true, true, false); //id13
+    public final Cell deadEndRight = new Cell(true, true, false, true);//id14
+    public final Cell fullCell = new Cell(true, true, true, true); //id15
     private final Cell[] cellClassifier = new Cell[]{emptyCell,
             wallUp, wallDown, wallLeft, wallRight,
             cornerUpLeft, cornerUpRight, cornerDownLeft, cornerDownRight,
@@ -29,12 +29,13 @@ public class Labyrinth {
             deadEndUp, deadEndDown, deadEndLeft, deadEndRight,
             fullCell};
 
-    private class Cell{
+    private class Cell {
         private boolean upWall;
         private boolean downWall;
         private boolean leftWall;
         private boolean rightWall;
-        public Cell(boolean upWall, boolean downWall, boolean leftWall, boolean rightWall){
+
+        public Cell(boolean upWall, boolean downWall, boolean leftWall, boolean rightWall) {
             this.upWall = upWall;
             this.downWall = downWall;
             this.leftWall = leftWall;
@@ -73,35 +74,35 @@ public class Labyrinth {
             this.rightWall = rightWall;
         }
 
-        public static boolean canGoUp(Cell fromCell, Cell toCell){
+        public static boolean canGoUp(Cell fromCell, Cell toCell) {
             return !(fromCell.isUpWall() || toCell.isDownWall());
         }
 
-        public boolean canGoUp(Cell toCell){
+        public boolean canGoUp(Cell toCell) {
             return !(isUpWall() || toCell.downWall);
         }
 
-        public static boolean canGoDown(Cell fromCell, Cell toCell){
+        public static boolean canGoDown(Cell fromCell, Cell toCell) {
             return !(fromCell.isDownWall() || toCell.isUpWall());
         }
 
-        public boolean canGoDown( Cell toCell){
+        public boolean canGoDown(Cell toCell) {
             return !(isDownWall() || toCell.isUpWall());
         }
 
-        public static boolean canGoLeft(Cell fromCell, Cell toCell){
+        public static boolean canGoLeft(Cell fromCell, Cell toCell) {
             return !(fromCell.isLeftWall() || toCell.isRightWall());
         }
 
-        public boolean canGoLeft( Cell toCell){
+        public boolean canGoLeft(Cell toCell) {
             return !(isLeftWall() || toCell.isRightWall());
         }
 
-        public static boolean canGoRight(Cell fromCell, Cell toCell){
+        public static boolean canGoRight(Cell fromCell, Cell toCell) {
             return !(fromCell.isRightWall() || toCell.isLeftWall());
         }
 
-        public boolean canGoRight(Cell toCell){
+        public boolean canGoRight(Cell toCell) {
             return !(isRightWall() || toCell.isLeftWall());
         }
 
@@ -111,7 +112,7 @@ public class Labyrinth {
         this.labyrinth = labyrinth;
     }
 
-    public Labyrinth(){
+    public Labyrinth() {
     }
 
     public Cell[][] getLabyrinth() {
@@ -126,7 +127,7 @@ public class Labyrinth {
         return cellClassifier[i];
     }
 
-    public Cell[][] generateLabyrinthById(int[][] userArray){
+    public Cell[][] generateLabyrinthById(int[][] userArray) {
         /**
          * Generate Labyrinth by creating integer matrix
          *         Just use id's as a template
@@ -146,9 +147,9 @@ public class Labyrinth {
 
         Cell[][] ans = new Cell[userArray.length][];
 
-        for(int i = 0; i < userArray.length; i++){
+        for (int i = 0; i < userArray.length; i++) {
             Cell[] tmpArr = new Cell[userArray[i].length];
-            for(int j = 0; j < userArray[i].length; j++){
+            for (int j = 0; j < userArray[i].length; j++) {
                 tmpArr[j] = getCellClassifier(userArray[i][j]);
             }
             ans[i] = tmpArr;
@@ -157,12 +158,12 @@ public class Labyrinth {
         return ans;
     }
 
-    public Cell[][] generateRandomLabyrinth(int width, int height){
+    public Cell[][] generateRandomLabyrinth(int width, int height) {
         Random rn = new Random();
         int[][] arr = new int[width][];
-        for(int i = 0; i < width; i++){
+        for (int i = 0; i < width; i++) {
             int[] tmpArr = new int[height];
-            for(int j = 0; j < height; j++){
+            for (int j = 0; j < height; j++) {
                 tmpArr[j] = rn.nextInt(0, 16);
             }
             arr[i] = tmpArr;
@@ -170,9 +171,54 @@ public class Labyrinth {
         return generateLabyrinthById(arr);
     }
 
-    public Cell[][] generateRandomLabyrinth(){
+    public Cell[][] generateRandomLabyrinth() {
         Random rn = new Random();
         return generateRandomLabyrinth(rn.nextInt(1, 10), rn.nextInt(1, 10));
+    }
+
+    private static void findPathRecursion(int[][] maze, Cell[][] labyrinth, int row, int col, int step) {
+        int rowCount = labyrinth.length;
+        int colCount = labyrinth[0].length;
+
+        if (row < 0 || row >= rowCount ||
+                col < 0 || col >= colCount) {
+            return;
+        }
+        if (maze[row][col] != 0) {
+            return;
+        }
+        maze[row][col] = step;
+
+        if (row - 1 >= 0 && labyrinth[row][col].canGoUp(labyrinth[row - 1][col])) {
+            findPathRecursion(maze, labyrinth, row - 1, col, step + 1);
+        }
+        if (col - 1 >= 0 && labyrinth[row][col].canGoLeft(labyrinth[row][col - 1])) {
+            findPathRecursion(maze, labyrinth, row, col - 1, step + 1);
+        }
+        if (col + 1 <= colCount - 1 && labyrinth[row][col].canGoRight(labyrinth[row][col + 1])) {
+            findPathRecursion(maze, labyrinth, row, col + 1, step + 1);
+        }
+        if (row + 1 <= rowCount - 1 && labyrinth[row][col].canGoDown(labyrinth[row + 1][col])) {
+            findPathRecursion(maze, labyrinth, row + 1, col, step + 1);
+        }
+    }
+
+    private int[][] generateEmptyPathArr() {
+        int[][] ans = new int[labyrinth.length][];
+        for (int i = 0; i < labyrinth.length; i++) {
+            int[] tmpAns = new int[labyrinth[i].length];
+            for (int j = 0; j < labyrinth[i].length; j++) {
+                tmpAns[j] = 0;
+            }
+            ans[i] = tmpAns;
+        }
+        return ans;
+    }
+
+    public static int[][] findPath(Labyrinth labyrinth, int startRow, int startCol) {
+        int[][] ans = labyrinth.generateEmptyPathArr();
+        findPathRecursion(ans, labyrinth.getLabyrinth(), startRow, startCol, 1);
+        return ans;
     }
 
 }
